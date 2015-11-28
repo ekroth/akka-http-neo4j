@@ -1,6 +1,7 @@
 akka-http-neo4j
 ===============
-Neo4j Scala library for use with akka-http and spray-json
+Neo4j Scala library for use with akka-http and
+[spray-json](https://github.com/spray/spray-json)
 
 [![Build Status](https://travis-ci.org/felixmulder/akka-http-neo4j.svg?branch=master)](https://travis-ci.org/felixmulder/akka-http-neo4j)
 
@@ -47,7 +48,7 @@ or an `N4jRows` is returned. The latter is just a type alias for
 val req = client send query // using same values as the above example
 
 req map {
-  case Right(rows) => rows foreach println // prints: Map(m -> {text: "Hello, world!"})
+  case Right(rows) => rows foreach println // prints: Map(m -> {text:"Hello, world!"})
   case Left(err)   => println(s"${err.code} ${err.message}")
 }
 ```
@@ -75,9 +76,9 @@ Foo("Title!", "Description!").toCQLNode("n")
 The case class can now be inserted into a query:
 
 ```scala
-val foo = Foo("Title!", "Description!")
+val fooNode = Foo("Title!", "Description!").toCQLNode("n")
 
-val insert = """CREATE ${foo.toCQLNode("n")} RETURN n""".n4jQuery
+val insert = """CREATE $fooNode RETURN n""".n4jQuery
 ```
 
 #### Parsing case classes from DB ####
