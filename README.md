@@ -86,7 +86,7 @@ val insert = """CREATE $fooNode RETURN n""".n4jQuery
 ```scala
 (client send insert) map {
   case Right(rows) => rows map { _.read[Foo]("n") }
-  case _ => Nil
+  case _ => Stream.empty
 }
-// returns a stream of Foo:s
+// returns Stream[Foo]
 ```
