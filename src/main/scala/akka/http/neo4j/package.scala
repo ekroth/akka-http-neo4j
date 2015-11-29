@@ -19,16 +19,16 @@ import spray.json._
 
 package object neo4j extends DefaultJsonProtocol {
   /** This class is passed to the RESTClients in order to perform a query */
-  final case class N4jQuery(statement: String)
   final case class N4jError(code: String, message: String)
 
   implicit val jsonN4jError = jsonFormat2(N4jError.apply)
 
   /** Allow N4jQuery to be parsable to JSON for use in RESTClients */
   implicit final object N4jQueryJson extends JsonFormat[N4jQuery] {
-    def write(c: N4jQuery) = JsObject(
+    def write(q: N4jQuery) = JsObject(
       "statements" -> JsArray(
-        JsObject("statement" -> JsString(c.statement))
+        JsObject("statement" -> JsString(q.statement),
+                 "parameters" -> q.parameters.toJson)
       )
     )
 

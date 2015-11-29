@@ -100,4 +100,15 @@ class ObjectClientSpec extends BaseSpec {
 
     assert(node == """(n:Foo {title:"Title!",desc:"Description!"})""")
   }
+
+  it should "allow prepared statements" in {
+    val query = "CREATE (n {props}) RETURN n"
+      .n4jQuery
+      .on("props" -> Map("name" -> "My Node"))
+
+    Await.result(client send query, 5.seconds) match {
+      case Right(rows) => assert(rows.head("n") == """{"name":"My Node"}""".parseJson)
+      case Left(err)   => fail(s"Received error: ${err.code}")
+    }
+  }
 }

@@ -81,11 +81,44 @@ val fooNode = Foo("Title!", "Description!").toCQLNode("n")
 val insert = """CREATE $fooNode RETURN n""".n4jQuery
 ```
 
+#### Prepared statements ####
+
+akka-http-neo4j uses prepared statements in the same way that the REST API for
+Neo4j does. In the query string, values wrapped in curly braces will be
+regarded as placeholders. Use the `on` method on the `N4jQuery` object to
+create a prepared statement.
+
+```scala
+val query = "CREATE (n {props}) RETURN n"
+  .n4jQuery
+  .on("props" -> Map("name" -> "My Node"))
+
+client send query
+```
+
+In the above example `query` can be equivalently produced using:
+
+```scala
+val query = N4jQuery("CREATE (n {props}) RETURN n",
+                     Map("props" -> Map("name" -> "My Node")))
+```
+
 #### Parsing case classes from DB ####
 
 ```scala
 (client send insert) map {
   case Right(rows) => rows map { _.read[Foo]("n") }
+  case _ => Stream.empty
+}
+// returns Stream[Foo]
+```
+
+This will give you `DeserializationException` (spray-json) if unsuccessful.
+As such, any calls that might fail should use the `readOpt[T]` method:
+
+```scala
+(client send insert) map {
+  case Right(rows) => rows.map( _.readOpt[Foo]("n") ).flatten
   case _ => Stream.empty
 }
 // returns Stream[Foo]
