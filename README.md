@@ -78,7 +78,7 @@ The case class can now be inserted into a query:
 ```scala
 val fooNode = Foo("Title!", "Description!").toCQLNode("n")
 
-val insert = """CREATE $fooNode RETURN n""".n4jQuery
+val insert = s"""CREATE $fooNode RETURN n""".n4jQuery
 ```
 
 #### Prepared statements ####
@@ -94,13 +94,6 @@ val query = "CREATE (n {props}) RETURN n"
   .on("props" -> Map("name" -> "My Node"))
 
 client send query
-```
-
-In the above example `query` can be equivalently produced using:
-
-```scala
-val query = N4jQuery("CREATE (n {props}) RETURN n",
-                     Map("props" -> Map("name" -> "My Node")))
 ```
 
 #### Parsing case classes from DB ####

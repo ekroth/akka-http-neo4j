@@ -37,13 +37,13 @@ object Neo4jClients extends DefaultJsonProtocol with NullOptions {
     implicit def exec: ExecutionContext
     implicit def mat: ActorMaterializer
 
-    protected def hostName: String = "localhost"
-    protected def hostPort: Int = 7474
-    protected def hostPath: String = "/db/data/"
-    protected def userAndPass: Option[(String, String)] = None
+    protected def hostName: String
+    protected def hostPort: Int
+    protected def hostPath: String
+    protected def userAndPass: Option[(String, String)]
 
-    private val authHeader: List[HttpHeader] = userAndPass map {
-      case (u, p) => List(Authorization(BasicHttpCredentials(u, p)))
+    private val authHeader: Seq[HttpHeader] = userAndPass map {
+      case (u, p) => Seq(Authorization(BasicHttpCredentials(u, p)))
     } getOrElse Nil
 
     private[this] val headers: List[HttpHeader] = List(
