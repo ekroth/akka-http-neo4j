@@ -13,17 +13,11 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= {
-  val akkaVersion       = "2.4.1"
   val akkaStreamVersion = "2.0-M1"
   val scalaTestVersion  = "2.2.5"
   Seq(
-    "com.typesafe.akka"   %%  "akka-actor"                          % akkaVersion,
-    "com.typesafe.akka"   %%  "akka-stream-experimental"            % akkaStreamVersion,
-    "com.typesafe.akka"   %%  "akka-http-core-experimental"         % akkaStreamVersion,
-    "com.typesafe.akka"   %%  "akka-http-experimental"              % akkaStreamVersion,
     "com.typesafe.akka"   %%  "akka-http-spray-json-experimental"   % akkaStreamVersion,
     "com.typesafe.akka"   %%  "akka-http-testkit-experimental"      % akkaStreamVersion,
-    "org.scalatest"       %%  "scalatest"                           % scalaTestVersion % "test",
-    "org.slf4j"           %   "slf4j-nop"                           % "1.6.4"
+    "org.scalatest"       %%  "scalatest"                           % scalaTestVersion % "test"
   )
 }

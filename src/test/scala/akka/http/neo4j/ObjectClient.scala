@@ -15,15 +15,11 @@
 
 package akka.http.neo4j.test
 
-import akka.http.scaladsl.testkit.{ScalatestRouteTest, RouteTestTimeout}
-import akka.http.scaladsl.model.headers._
-
-import spray.json._
-
+import org.scalatest._
 import scala.concurrent._
 import scala.concurrent.duration._
 import scala.language.postfixOps
-import org.scalatest._
+import spray.json._
 
 import akka.http.neo4j._
 
