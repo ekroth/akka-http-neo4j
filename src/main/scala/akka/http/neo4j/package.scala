@@ -18,6 +18,8 @@ package akka.http
 import spray.json._
 
 package object neo4j extends DefaultJsonProtocol {
+  import scala.util.Try
+
   /** This class is passed to the RESTClients in order to perform a query */
   final case class N4jError(code: String, message: String)
 
@@ -44,14 +46,14 @@ package object neo4j extends DefaultJsonProtocol {
       def n4jQuery: N4jQuery = N4jQuery(str)
   }
 
-  implicit final class ReadOptFromMap(val map: Map[String, JsValue]) extends AnyVal {
-    def readOpt[T : JsonFormat](field: String): Option[T] =
-      map.get(field).map(_.convertTo[T])
-  }
-
   implicit final class ReadFromMap(val map: Map[String, JsValue]) extends AnyVal {
     def read[T : JsonFormat](field: String): T =
-      map.get(field).map(_.convertTo[T]).get
+      map(field).convertTo[T]
+  }
+
+  implicit final class ReadOptFromMap(val map: Map[String, JsValue]) extends AnyVal {
+    def readOpt[T : JsonFormat](field: String): Option[T] =
+      Try(map.read[T](field)).toOption
   }
 
   implicit final class WriteCCtoNode[T <: Product](val product: T) extends AnyVal {
