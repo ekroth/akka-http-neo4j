@@ -118,7 +118,7 @@ object Neo4jClients extends DefaultJsonProtocol with NullOptions {
                  port: Int    = 7474,
                  path: String = "/db/data/",
                  user: String = "",
-                 pass: String = "")(implicit system: ActorSystem, materializer: ActorMaterializer) = new JsonClient {
+                 pass: String = "")(implicit system: ActorSystem, materializer: ActorMaterializer): JsonClient = new JsonClient {
     implicit val sys  = system
     implicit val exec = system.dispatcher
     implicit val mat  = materializer
@@ -137,7 +137,7 @@ object Neo4jClients extends DefaultJsonProtocol with NullOptions {
                    port: Int    = 7474,
                    path: String = "/db/data/",
                    user: String = "",
-                   pass: String = "")(implicit system: ActorSystem, materializer: ActorMaterializer) = new StringClient {
+                   pass: String = "")(implicit system: ActorSystem, materializer: ActorMaterializer): StringClient = new StringClient {
     implicit val sys  = system
     implicit val exec = system.dispatcher
     implicit val mat  = materializer
@@ -156,7 +156,7 @@ object Neo4jClients extends DefaultJsonProtocol with NullOptions {
                    port: Int    = 7474,
                    path: String = "/db/data/",
                    user: String = "",
-                   pass: String = "")(implicit system: ActorSystem, materializer: ActorMaterializer) = new ObjectClient {
+                   pass: String = "")(implicit system: ActorSystem, materializer: ActorMaterializer): ObjectClient = new ObjectClient {
     implicit val sys  = system
     implicit val exec = system.dispatcher
     implicit val mat  = materializer
