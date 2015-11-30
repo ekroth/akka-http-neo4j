@@ -13,7 +13,7 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= {
-  val akkaStreamVersion = "2.0-M1"
+  val akkaStreamVersion = "2.0-M2"
   val scalaTestVersion  = "2.2.5"
   Seq(
     "com.typesafe.akka"   %%  "akka-http-spray-json-experimental"   % akkaStreamVersion,
